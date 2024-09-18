@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+</head>
+<body>
+    <h1>Sentiment Analysis of Social Media Posts</h1>
+    <textarea id="text-input" rows="4" cols="50" placeholder="Enter text..."></textarea>
+    <br>
+    <button onclick="analyzeSentiment()">Analyze</button>
+    <h2>Sentiment Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        async function analyzeSentiment() {
+            const text = document.getElementById('text-input').value;
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = `Label: ${data.label}, Score: ${data.score.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
